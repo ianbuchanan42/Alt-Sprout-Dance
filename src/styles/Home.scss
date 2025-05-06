@@ -1,0 +1,72 @@
+@use './_variables' as *;
+
+/* Buttons */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.welcome-message {
+  text-align: center;
+  padding: 20px;
+  margin: 20px auto;
+  width: 100%;
+  h2 {
+    font-size: 1.8rem;
+    color: #222;
+    margin-bottom: 12px;
+  }
+  .intro {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6; //!!!! variable?
+    margin-bottom: 20px;
+  }
+}
+
+.info-box {
+  background: $light-color;
+  text-align: left;
+  width: 100%;
+  padding: 40px;
+  .info-content {
+    margin: 20px 0;
+  }
+  .demo-figure {
+    max-width: 300px;
+    margin: auto 0;
+  }
+
+  .demo-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .demo-video {
+    max-height: 300px;
+  }
+
+  .photo-credit {
+    color: gray;
+    font-size: small;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    li {
+      font-size: 1rem;
+      color: #555;
+      padding: 5px 0;
+    }
+  }
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+  #info {
+    display: flex;
+  }
+}

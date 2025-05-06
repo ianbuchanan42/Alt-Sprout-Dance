@@ -1,0 +1,26 @@
+@use 'styles/_variables.scss' as *;
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: $base-font-family;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  font-size: 16px;
+  font-synthesis: none;
+  height: 100%; /* allow full‐page backgrounds */
+  margin: 0;
+  background-color: $light-color;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}

@@ -1,0 +1,20 @@
+@use './_variables' as *;
+
+footer {
+  width: 100%;
+  background-color: $accent-color;
+  text-align: center;
+  padding: 15px 0;
+  width: 100%;
+
+  #gitHubAnchor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  #gitHubIcon {
+    width: 30px;
+    height: 30px;
+  }
+}

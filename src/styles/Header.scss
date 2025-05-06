@@ -1,0 +1,48 @@
+@use './_variables' as *;
+
+h1 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+header#main-header {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: $light-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 4px 2px 0px #00000040;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+
+#auth-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.header-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  &:first-child {
+    margin-right: 8px;
+  }
+}

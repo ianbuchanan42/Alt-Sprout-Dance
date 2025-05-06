@@ -1,0 +1,112 @@
+@use './_variables' as *;
+
+.image-input {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; //space out items
+  margin: 0 20px;
+  align-items: center;
+  input,
+  select {
+    background-color: $light-color;
+  }
+  label {
+    display: block;
+  }
+  select {
+    color: $text-color;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+
+  input {
+    &[type='text'],
+    &[type='file'] {
+      width: 100%;
+      line-height: 28px;
+      vertical-align: auto;
+      height: 50px;
+      width: 400px;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+    &[type='file']::file-selector-button {
+      color: $light-color;
+      margin-right: 4px;
+      border: none;
+      border-radius: 5px;
+      background-color: $dark-color;
+      transition: 1s;
+      &:hover {
+        background-color: $action-color;
+      }
+    }
+  }
+
+  #toggle-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  .toggle-label {
+    background-color: $light-color;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    input[type='checkbox'] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: $dark-color;
+      :checked {
+        width: 16px;
+        height: 16px;
+        accent-color: $dark-color;
+      }
+    }
+  }
+
+  .preview-container {
+    width: 100%; /* Ensures it takes full width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Adds space around the image */
+  }
+  .preview-image {
+    width: 100%; /* Ensures it scales correctly */
+    max-width: 350px; /* Prevents it from getting too large */
+    height: auto; /*  Maintains aspect ratio */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+  }
+
+  .loader {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-top: 3px solid #646cff; /* Primary color */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+  }
+
+  /* Spinning animation */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

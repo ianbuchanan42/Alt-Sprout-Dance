@@ -1,0 +1,559 @@
+/*
+  BEM Naming Cheat-Sheet
+
+  Block
+    • Represents a standalone component
+    • Syntax: .block
+    • Example: .card
+
+  Element
+    • A part of the Block, cannot live alone
+    • Syntax: .block__element
+    • Example: .card__title
+
+  Modifier
+    • A flag on Block or Element for state or variation
+    • Syntax: .block--modifier   or   .block__element--modifier
+    • Examples:
+        .card--featured
+        .card__title--large
+
+  Best Practices
+    – Keep names meaningful and concise
+    – Use double underscores for elements, double hyphens for modifiers
+    – Don’t nest selectors; rely on flat BEM structure
+*/
+
+@use 'styles/_variables.scss' as *;
+
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  margin: auto;
+  max-width: 1200px;
+
+  h2 {
+    margin-top: 20px;
+  }
+}
+
+//!!! mixin or include, breakdown buttons
+
+.btn {
+  font-family: inherit;
+  position: relative; // allows for tooltips
+  border-radius: 5px;
+  border: 1px solid transparent; //overrides default?
+  margin: 10px 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.3s; //need to fix!!!!
+  transition: color 0.3s; // need to fix!!!!
+  width: 100%; /* Full width on mobile */
+  max-width: 200px;
+  &-primary {
+    background-color: $dark-color;
+    color: $light-color;
+    &:hover {
+      background-color: $action-color;
+    }
+  }
+  &-secondary {
+    border-color: $dark-color;
+    background-color: $light-color;
+    color: $dark-color;
+    &:hover {
+      color: $action-color;
+      border-color: $action-color;
+    }
+  }
+  // &:focus {
+  // not very visible!
+  // outline: 4px auto -webkit-focus-ring-color;
+  // }
+}
+
+/* Reset default styles for light mode */
+@media (prefers-color-scheme: light) {
+}
+
+@media (min-width: 768px) {
+}
+
+// Forward
+
+// The @forward rule is part of Sass’s new module system (which includes @use and @forward) and is used to re-export members from one module through another. It helps you build a single “public API” for a collection of partials or libraries, so consumers only ever have to @use one file.
+
+// MIXINS
+
+// default:null is useful
+// also @content, allows declaration block within included mixin (use with media query wrappers!)
+
+// // A simple mixin that applies flexbox centering.
+// // Usage: @include centered-flex;
+// @mixin centered-flex {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// // A parameterized mixin for setting text styles.
+// // Usage: @include text-style(18px, bold);
+// @mixin text-style($size, $weight: normal) {
+//   font-size: $size;
+//   font-weight: $weight;
+//   color: #333;
+// }
+
+// // Example of using both mixins in one file:
+
+// // .header will be a full‐width bar with centered content
+// .header {
+//   @include centered-flex;       // centers children horizontally & vertically
+//   height: 60px;
+//   background-color: #f8f8ff;
+// }
+
+// // .title uses our text‐style mixin with custom size & weight
+// .title {
+//   @include text-style(24px, bold);  // sets font-size: 24px; font-weight: bold;
+//   margin: 0;
+// }
+
+// // .card combines both mixins for a centered box with styled header
+// .card {
+//   @include centered-flex;           // center contents inside the card
+//   flex-direction: column;
+//   padding: 1rem;
+//   border: 1px solid #c3d9ed;
+
+//   .card-title {
+//     @include text-style(20px);      // default weight (normal)
+//     margin-bottom: 0.5rem;
+//   }
+
+//   .card-body {
+//     text-align: center;
+//     color: #555;
+//   }
+// }
+
+// // 1) Using a map of named breakpoints
+// $breakpoints: (
+//   mobile: 480px,
+//   tablet: 768px,
+//   desktop: 1024px
+// );
+
+// /// Wraps its content in the media query for the given key
+// /// @param $device  One of the keys in $breakpoints
+// @mixin respond-to($device) {
+//   $bp: map-get($breakpoints, $device);
+//   @if $bp {
+//     @media (min-width: $bp) {
+//       @content;
+//     }
+//   } @else {
+//     @warn "No breakpoint defined for `#{$device}`.";
+//   }
+// }
+
+// // Usage:
+// .container {
+//   width: 100%;
+
+//   @include respond-to(tablet) {
+//     width: 80%;
+//   }
+
+//   @include respond-to(desktop) {
+//     width: 60%;
+//   }
+// }
+
+// // 2) A generic “pass-through” media-query mixin
+// /// Wraps its content in any media-query string you give it
+// /// @param $query  A raw media query, e.g. '(max-width: 600px)'
+// @mixin at($query) {
+//   @media #{$query} {
+//     @content;
+//   }
+// }
+
+// // Usage:
+// .card {
+//   padding: 1rem;
+
+//   // anything inside here is scoped to max-width 600px
+//   @include at("(max-width: 600px)") {
+//     padding: 0.5rem;
+//     font-size: 0.9rem;
+//   }
+
+//   // you can also combine multiple conditions
+//   @include at("(min-width: 601px) and (max-width: 900px)") {
+//     padding: 0.75rem;
+//   }
+// }
+
+// Combined mixins and examples in one SCSS file
+
+// 1. Configuration maps and flags
+// $breakpoints: (
+//   mobile:  480px,
+//   tablet:  768px,
+//   desktop: 1024px
+// );
+
+// $enable-border: true;
+
+// $themes: (
+//   light: #fff,
+//   dark:  #000
+// );
+
+// // 2. Media‐query mixins
+
+// /// Wraps its content in a named breakpoint media query
+// /// @param $device  One of the keys in $breakpoints
+// @mixin respond-to($device) {
+//   $bp: map-get($breakpoints, $device);
+//   @if $bp {
+//     @media (min-width: $bp) {
+//       @content;
+//     }
+//   } @else {
+//     @warn "No breakpoint defined for `#{$device}`.";
+//   }
+// }
+
+// /// Wraps its content in any raw media query string
+// /// @param $query  e.g. '(max-width: 600px)'
+// @mixin at($query) {
+//   @media #{$query} {
+//     @content;
+//   }
+// }
+
+// // 3. Conditional mixins using @if/@else
+
+// /// Applies variant-based button styles
+// /// @param $variant  'primary', 'secondary', or fallback
+// @mixin button-variant($variant) {
+//   @if $variant == primary {
+//     background: #007aff;
+//     color: white;
+//   } @else if $variant == secondary {
+//     background: #f1f1f1;
+//     color: #333;
+//   } @else {
+//     background: #ccc;
+//     color: #000;
+//   }
+// }
+
+// /// Sets max-width for cards based on size keyword
+// /// @param $size  'large', 'medium', or anything else
+// @mixin card-width($size) {
+//   @if $size == large {
+//     max-width: 800px;
+//   } @else if $size == medium {
+//     max-width: 600px;
+//   } @else {
+//     max-width: 100%;
+//   }
+// }
+
+// /// Applies a theme background if defined, warns on unknown
+// /// @param $name  'light' or 'dark'
+// @mixin theme-bg($name) {
+//   @if map-has-key($themes, $name) {
+//     background: map-get($themes, $name);
+//   } @else {
+//     @warn "Unknown theme `#{$name}`, defaulting to light.";
+//     background: map-get($themes, light);
+//   }
+// }
+
+// // 4. Example usage of flags, mixins, and media queries
+
+// .button {
+//   padding: 0.5rem 1rem;
+//   background: #007aff;
+//   color: white;
+
+//   // Boolean flag example
+//   @if $enable-border {
+//     border: 2px solid darken(#007aff, 10%);
+//   } @else {
+//     border: none;
+//   }
+// }
+
+// .btn {
+//   @include button-variant(primary);
+// }
+// .btn--alt {
+//   @include button-variant(secondary);
+// }
+// .btn--unknown {
+//   @include button-variant(foo); // falls back to default
+// }
+
+// .card {
+//   padding: 1rem;
+//   @include card-width(medium);
+
+//   // Named-breakpoint media query
+//   @include respond-to(tablet) {
+//     padding: 1.5rem;
+//   }
+
+//   // Raw media-query string
+//   @include at("(max-width: 600px)") {
+//     padding: 0.75rem;
+//   }
+// }
+
+// .page {
+//   @include theme-bg(dark);
+// }
+
+// // Generates .mt-1, .mt-2, … .mt-5 with increasing spacing
+// @for $i from 1 through 5 {
+//   .mt-#{$i} {
+//     margin-top: #{$i * 0.5}rem;
+//   }
+// }
+
+// 1. Define a map of color names → hex values
+// $colors: (
+//   primary:   #007aff,
+//   secondary: #f1c40f,
+//   danger:    #e74c3c
+// );
+
+// // 2. Loop over the map and emit two classes per entry:
+// //    .text-<name> { color: <value>; }
+// //    .bg-<name>   { background-color: <value>; }
+// @each $name, $hex in $colors {
+//   .text-#{$name} {
+//     color: $hex;
+//   }
+//   .bg-#{$name} {
+//     background-color: $hex;
+//   }
+// }
+
+// // 1. Define a map of semantic colors
+// $colors: (
+//   primary:   #3498db,
+//   secondary: #2ecc71,
+//   accent:    #e74c3c
+// );
+
+// // 2. Use map-get() to pull values out
+// .button {
+//   background-color: map-get($colors, primary);
+//   color: white;
+
+//   &:hover {
+//     background-color: map-get($colors, accent);
+//   }
+// }
+
+// // 3. You can also loop over the map
+// @each $name, $hex in $colors {
+//   .text-#{$name} {
+//     color: $hex;
+//   }
+// }
+
+// // 1. Define a list of fallback fonts
+// $font-stack: ("Helvetica Neue", Helvetica, Arial, sans-serif);
+
+// // 2. Use nth() to pull out the 2nd item
+// body {
+//   font-family: nth($font-stack, 2); // → Helvetica
+// }
+
+// // 3. You can even grab from the end with a negative index
+// h1 {
+//   font-family: nth($font-stack, -1); // → sans-serif
+// }
+// How nth() works
+
+// Parameters: nth($list, $n) takes a Sass list and an integer.
+
+// 1-based indexing: The first element is index 1, not 0.
+
+// Negative indices: -1 is the last item, -2 the second­-to-last, etc.
+
+// Errors: If $n is out of bounds (e.g. nth($list, 5) on a 4-item list), you’ll get a Sass error at compile time.
+
+/*
+  Sass @extend vs @include Cheat Sheet
+
+  @extend
+    • Merges selectors at compile-time so they share identical rules.
+    • Pros:
+        – Smaller output (shared rules).
+        – Lower specificity (no new selectors).
+    • Cons:
+        – Can produce unexpected selector combinations.
+        – No parameters or internal logic.
+    • Example:
+        .button {
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          font-weight: bold;
+        }
+        .cta-button {
+          @extend .button;
+          background: hotpink;
+          color: white;
+        }
+
+  @include (Mixins)
+    • Injects mixin contents wherever called, supports args/logic.
+    • Pros:
+        – Fully parameterized.
+        – Encapsulates loops, conditionals.
+        – Predictable, clear source.
+    • Cons:
+        – May duplicate CSS (each include repeats rules).
+    • Example:
+        @mixin button-base($bg, $fg) {
+          padding: 0.5rem 1rem;
+          border-radius: 4px;
+          background: $bg;
+          color: $fg;
+          font-weight: bold;
+        }
+        .button {
+          @include button-base(#eee, #333);
+        }
+        .cta-button {
+          @include button-base(hotpink, white);
+        }
+
+  When to choose:
+    – Exact same, non-parameterized styles → @extend  
+    – Parameterized or logic-driven reuse → @include  
+    – Need minimal CSS size → @extend  
+    – Clear, self-contained reuse → @include
+*/
+
+// %PLACEHOLDERS like a variable %danger, safe way to use extend, always use placeholder with extend!
+
+/*
+  Sass Function Usage Cheat Sheet
+
+  // 1. Define a simple function that doubles a value
+  @function double($value) {
+    @return $value * 2;
+  }
+
+  // 2. Use the function within a selector
+  .box {
+    width: double(10px);    // → 20px
+    height: double(5rem);   // → 10rem
+  }
+
+  // 3. Function with a default argument
+  @function rhythm($multiplier, $base: 1rem) {
+    @return $multiplier * $base;
+  }
+
+  .text {
+    margin-bottom: rhythm(2);     // → 2rem
+    padding: rhythm(1.5, 0.5rem); // → 0.75rem
+  }
+*/
+
+/*
+  Sass @extend vs @include (mixins) Cheat Sheet
+
+  ——————————————————————————————
+  WHEN TO USE @extend
+  ——————————————————————————————
+  • Reason:
+      – Share identical style blocks without repeating code.
+      – Keep your CSS output minimal by merging selectors.
+
+  • Pros:
+      – Smaller generated CSS (one rule shared).
+      – Lower specificity (adds no extra selectors).
+
+  • Cons:
+      – Can produce unexpected selector relationships.
+      – No parameters or internal logic support.
+      – Harder to trace origin of inherited styles.
+
+  • Example:
+      // Base styles
+      .button {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+
+      // Reuse identical rules
+      .cta-button {
+        @extend .button;
+        background: hotpink;
+        color: white;
+      }
+
+
+
+  ——————————————————————————————
+  WHEN TO USE @include (Mixins)
+  ——————————————————————————————
+  • Reason:
+      – Reuse chunks of CSS that need arguments, loops, or conditionals.
+      – Encapsulate complexity in one place.
+
+  • Pros:
+      – Fully parameterized (colors, sizes, breakpoints, etc.).
+      – Encapsulates logic (loops, conditionals, media queries).
+      – Predictable output: you see exactly where styles are injected.
+
+  • Cons:
+      – Can bloat your CSS if over-used (duplication per include).
+      – Slightly higher specificity if mixin wraps selectors.
+
+  • Example:
+      // Define a parameterized button mixin
+      @mixin button-base($bg, $fg) {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        background: $bg;
+        color: $fg;
+        font-weight: bold;
+      }
+
+      // Inject with different arguments
+      .button {
+        @include button-base(#eee, #333);
+      }
+
+      .cta-button {
+        @include button-base(hotpink, white);
+      }
+
+
+
+  ——————————————————————————————
+  QUICK GUIDELINES
+  ——————————————————————————————
+  – Use @extend for exact, non-parameterized style duplicates when CSS size is a priority.  
+  – Use @include whenever you need arguments or internal Sass logic.  
+  – Avoid heavy use of @extend in deeply nested selectors to prevent selector entanglement.  
+  – Balance clarity, maintainability, and output size when choosing between them.
+*/
