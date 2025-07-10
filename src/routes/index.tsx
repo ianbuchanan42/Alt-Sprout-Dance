@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import Generator from '../pages/Generator';
-import Dashboard from '../pages/Dashboard';
+import Settings from '../pages/Settings';
 
 const user = false;
 
@@ -11,7 +11,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path='/' element={user ? <Generator /> : <Home />} />
       <Route path='/generator' element={<Generator />} />
-      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/settings' element={<Settings />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );

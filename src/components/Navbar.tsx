@@ -40,8 +40,8 @@ export default function Navbar() {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/dashboard' onClick={() => setIsOpen(false)}>
-            Dashboard
+          <NavLink to='/settings' onClick={() => setIsOpen(false)}>
+            Settings
           </NavLink>
         </li>
       </ul>

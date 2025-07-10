@@ -1,15 +1,44 @@
-import GeneratorForm from '../components/GeneratorForm';
-import ImageInput from '../components/ImageInput';
-import SubjectInput from '../components/SubjectInput';
-import TargetAudienceInput from '../components/TargetAudienceInput';
-import ResponseDisplay from '../components/ResponseDisplay';
-import { useState } from 'react';
-import InputSettings from '../components/InputSettings';
+import GeneratorForm from '../components/generator/GeneratorForm';
+import ImageInput from '../components/generator/ImageInput';
+import SubjectInput from '../components/generator/SubjectInput';
+import Options from '../components/generator/Options';
+import ResponseDisplay from '../components/generator/ResponseDisplay';
+import { ChangeEvent, useState } from 'react';
+import InputSettings from '../components/generator/InputSettings';
+import {
+  selectDefaultAudience,
+  selectDefaultDanceType,
+  selectTargetAudienceOptions,
+  selectTargetDanceTypes,
+} from '../store/slices/dashboardSlice';
+import { useAppSelector } from '../store/hooks';
 
 // change to dashboard hydrated by redux dashboard slice
 
 const Generator = () => {
   //const [isLoading, setIsLoading] = useState();
+
+  const audienceOptions = useAppSelector(selectTargetAudienceOptions);
+
+  const [selectedAudience, setSelectedAudience] = useState(
+    useAppSelector(selectDefaultAudience)
+  );
+
+  const danceTypes = useAppSelector(selectTargetDanceTypes);
+
+  const [selectedDanceType, setSelectedDanceType] = useState(
+    useAppSelector(selectDefaultDanceType)
+  );
+
+  const handleAudienceChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSelectedAudience(value);
+  };
+
+  const handleDanceTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSelectedDanceType(value);
+  };
 
   const [toggleInputOutput, setToggleInputOutput] = useState(true);
   return (
@@ -20,7 +49,18 @@ const Generator = () => {
           <ImageInput />
           <SubjectInput />
           <InputSettings>
-            <TargetAudienceInput />
+            <Options
+              label='Targe Audience'
+              options={audienceOptions}
+              selected={selectedAudience}
+              handleChange={handleAudienceChange}
+            />
+            <Options
+              label='Target Dance Style'
+              options={danceTypes}
+              selected={selectedDanceType}
+              handleChange={handleDanceTypeChange}
+            />
           </InputSettings>
         </GeneratorForm>
       ) : (
@@ -30,18 +70,18 @@ const Generator = () => {
       {/* // toggle input or result  */}
       <div className='button-container'>
         <button
-          className='btn btn-primary'
+          className='btn btn__primary'
           onClick={() => setToggleInputOutput(!toggleInputOutput)}
         >
           Edit Input
         </button>
         <button
-          className='btn btn-primary'
+          className='btn btn__primary'
           onClick={() => setToggleInputOutput(!toggleInputOutput)}
         >
           View Results
         </button>
-        <button className='btn btn-primary'>Reset</button>
+        <button className='btn btn__primary'>Reset</button>
       </div>
     </div>
   );

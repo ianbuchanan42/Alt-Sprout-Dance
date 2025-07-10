@@ -1,4 +1,4 @@
-import '../styles/GeneratorForm.scss';
+import '../../styles/generator/GeneratorForm.scss';
 
 const GeneratorForm = ({ children }: React.PropsWithChildren) => {
   const isLoading = false;
@@ -9,7 +9,7 @@ const GeneratorForm = ({ children }: React.PropsWithChildren) => {
         {children}
         <div className='submit-container'>
           <button
-            className='btn btn-primary'
+            className='btn btn__primary'
             type='submit'
             disabled={isLoading}
           >

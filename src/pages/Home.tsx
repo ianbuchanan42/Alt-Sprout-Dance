@@ -32,7 +32,7 @@ const Home = () => {
               <figure className='demo-figure'>
                 <img
                   className='demo-image'
-                  src='https://afziltusqfvlckjbgkil.supabase.co/storage/v1/object/sign/assets/maggie-carey.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhc3NldHMvbWFnZ2llLWNhcmV5LnBuZyIsImlhdCI6MTc0NTYyNjI1NywiZXhwIjoxODQwMjM0MjU3fQ.nikytWIXEZRIggEiJA5F3y0BbHtF-xk6qKke2VQDCVg'
+                  src='src/assets/maggie-carey.png'
                   alt='Ballet dancer Maggie Carey strikes a dynamic pose, wearing a deep burgundy costume against a soft purple background, embodying elegance and strength.'
                 />
                 <figcaption className='photo-credit'>
@@ -81,19 +81,26 @@ const Home = () => {
           </p>
 
           <h3>Alt Sprout Dance in action!</h3>
-          <video
+          {/* <video
             className='info-content'
             controls={true}
             width='100%'
             height='auto'
             //name="Video Name"
           >
-            <source src='https://afziltusqfvlckjbgkil.supabase.co/storage/v1/object/sign/assets/Screen%20Recording%202025-03-08%20at%206.04.46%20PM.mov?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhc3NldHMvU2NyZWVuIFJlY29yZGluZyAyMDI1LTAzLTA4IGF0IDYuMDQuNDYgUE0ubW92IiwiaWF0IjoxNzQ2MTI3OTA2LCJleHAiOjE4NDA3MzU5MDZ9.DRdw4Nni1WUjL2G3QxWErolo8-sFsW_eCVmfBfLUFAM' />
-          </video>
+            <source src='https://youtu.be/TMQ6e1iJkMc' />
+          </video> */}
+          <iframe
+            src='https://drive.google.com/file/d/1ObRlceMxu3VFrprTmu3XnHCVXKBDNfj5/preview'
+            width='640'
+            height='480'
+            allow='autoplay'
+            title='Alt Sprout Dance demo'
+          ></iframe>
           <h3>Get Started</h3>
           <p>Start making that alt text dance!</p>
           <nav aria-label='Authentication'>
-            <button className='btn btn-primary'>Login with Google</button>
+            <button className='btn btn__primary'>Login with Google</button>
           </nav>
         </article>
       </section>

@@ -3,11 +3,25 @@
 // Target Audiences
 // temperature
 
+// useEffect(() => {
+//   dispatch(loadDashboardFromServer());
+// }, [dispatch]);
+
 // !!! use createSelector from 'reselect' if we need values derived from values of state
+
+// Partial and Omit utility methods
 
 // request and stor user dashboard info like settings and data
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '../index';
+
+type DanceTypes = ['Ballet', ...string[]];
+
+type TargetAudienceOptions = [
+  'Ballet Lovers',
+  'Dance Enthusiasts',
+  ...string[]
+];
 
 // 1. Define your state interface
 export interface DashboardState {
@@ -15,8 +29,10 @@ export interface DashboardState {
   complexResponseOn: boolean;
   simpleCharMax: number;
   complexCharMax: number;
-  targetAudienceOptions: string[];
-  defaultAudience: number;
+  targetDanceTypes: DanceTypes;
+  defaultDanceType: string;
+  targetAudienceOptions: TargetAudienceOptions;
+  defaultAudience: string;
 }
 
 // 2. Initial state
@@ -25,12 +41,14 @@ const initialState: DashboardState = {
   complexResponseOn: true,
   simpleCharMax: 100,
   complexCharMax: 400,
+  targetDanceTypes: ['Ballet', 'Contemporary', 'Modern'],
+  defaultDanceType: 'Ballet',
   targetAudienceOptions: [
     'Ballet Lovers',
     'Dance Enthusiasts',
     'Dance Magazine Readers',
   ],
-  defaultAudience: 0,
+  defaultAudience: 'Ballet Lovers',
 };
 
 // 3. Create slice
@@ -38,7 +56,7 @@ export const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
-    // ——— Granular actions ———
+    // ——— Response Options ———
     toggleSimpleResponse(state) {
       state.simpleResponseOn = !state.simpleResponseOn;
     },
@@ -51,14 +69,40 @@ export const dashboardSlice = createSlice({
     setComplexCharMax(state, action: PayloadAction<number>) {
       state.complexCharMax = action.payload;
     },
-    setTargetAudienceOptions(state, action: PayloadAction<string[]>) {
+
+    // --- Dance Types ---
+
+    setNewTargetDanceType(state, action: PayloadAction<string>) {
+      state.targetDanceTypes = [...state.targetDanceTypes, action.payload];
+    },
+
+    // ! unused !
+    setTargetDanceTypes(state, action: PayloadAction<TargetAudienceOptions>) {
+      state.targetAudienceOptions = action.payload;
+    },
+
+    setDefaultDanceType(state, action: PayloadAction<string>) {
+      state.defaultDanceType = action.payload;
+    },
+
+    // --- Audience Options ---
+
+    setNewTargetAudienceOption(state, action: PayloadAction<string>) {
+      state.targetAudienceOptions = [
+        ...state.targetAudienceOptions,
+        action.payload,
+      ];
+    },
+
+    // ! unused !
+    setTargetAudienceOptions(
+      state,
+      action: PayloadAction<TargetAudienceOptions>
+    ) {
       state.targetAudienceOptions = action.payload;
       // optionally reset defaultAudience if out of range
-      if (state.defaultAudience >= action.payload.length) {
-        state.defaultAudience = 0;
-      }
     },
-    setDefaultAudience(state, action: PayloadAction<number>) {
+    setDefaultAudience(state, action: PayloadAction<string>) {
       state.defaultAudience = action.payload;
     },
 
@@ -75,6 +119,10 @@ export const {
   toggleComplexResponse,
   setSimpleCharMax,
   setComplexCharMax,
+  setNewTargetDanceType,
+  setTargetDanceTypes,
+  setDefaultDanceType,
+  setNewTargetAudienceOption,
   setTargetAudienceOptions,
   setDefaultAudience,
   updateDashboard,
@@ -102,28 +150,24 @@ export const selectSimpleCharMax = (state: RootState): number =>
 export const selectComplexCharMax = (state: RootState): number =>
   state.dashboard.complexCharMax;
 
+/** Dance Styles */
+
+export const selectTargetDanceTypes = (state: RootState): string[] =>
+  state.dashboard.targetDanceTypes;
+
+export const selectDefaultDanceType = (state: RootState): string =>
+  state.dashboard.defaultDanceType;
+
 /** Audience settings */
 export const selectTargetAudienceOptions = (state: RootState): string[] =>
   state.dashboard.targetAudienceOptions;
 
-export const selectDefaultAudienceIndex = (state: RootState): number =>
+export const selectDefaultAudience = (state: RootState): string =>
   state.dashboard.defaultAudience;
 
 //
 // ——— Derived selectors ———
 //
-
-/**
- * Get the name of the currently selected audience,
- * or `null` if the index is out of range.
- */
-export const selectDefaultAudienceName = createSelector(
-  selectTargetAudienceOptions,
-  selectDefaultAudienceIndex,
-  (options, index) => {
-    return options[index] ?? null;
-  }
-);
 
 /**
  * Example: derive whether we're in a “simple-only” mode

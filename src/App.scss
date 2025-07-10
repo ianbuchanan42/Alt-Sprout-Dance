@@ -56,14 +56,14 @@ main {
   transition: color 0.3s; // need to fix!!!!
   width: 100%; /* Full width on mobile */
   max-width: 200px;
-  &-primary {
+  &__primary {
     background-color: $dark-color;
     color: $light-color;
     &:hover {
       background-color: $action-color;
     }
   }
-  &-secondary {
+  &__secondary {
     border-color: $dark-color;
     background-color: $light-color;
     color: $dark-color;
